@@ -41,10 +41,33 @@ object Main {
   /**
    * Exercise 2
    */
-    def balance(chars: List[Char]): Boolean = {
+  def balance(chars: List[Char]): Boolean = {
+    assert(chars.nonEmpty, "Charset is empty")
 
+    var bufCounter: Int = 0
+    var balance: Int = 0
+    val open: Char = '('
+    val close: Char = ')'
 
+    def loop(list: List[Char]): Boolean = {
+      if (list.isEmpty) bufCounter == 0
+      else {
+        val c: Char = list.head
+        if (c == open) {
+          bufCounter += 1
+          balance += 1
+        }
+        if(c == close) {
+          bufCounter -= 1
+          if (balance > 0) balance -= 1
+        }
+        loop(list.tail)
+      }
     }
+
+    loop(chars)
+    bufCounter == 0 && balance == 0
+  }
   
   /**
    * Exercise 3
