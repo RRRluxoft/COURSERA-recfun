@@ -72,5 +72,17 @@ object Main {
   /**
    * Exercise 3
    */
-    def countChange(money: Int, coins: List[Int]): Int = ???
+    def countChange(money: Int, coins: List[Int]): Int = {
+
+      def count(capacity: Int, changes: List[Int]): Int = {
+        if(capacity == 0) 1
+        else if(capacity < 0) 0
+        else if(changes.isEmpty && capacity >= 1) 0
+        else {
+          count(capacity, changes.tail) + count(capacity - changes.head, changes)
+        }
+      }
+
+      count(money, coins.sortWith(_.compareTo(_) < 0))
+    }
   }
